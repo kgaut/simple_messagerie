@@ -53,7 +53,7 @@ use Drupal\user\UserInterface;
  *   field_ui_base_route = "private_message.settings"
  * )
  */
-class PrivateMessage extends ContentEntityBase implements PrivateMessageInterface {
+class PrivateMessage extends ContentEntityBase {
 
   use EntityChangedTrait;
 
@@ -63,7 +63,8 @@ class PrivateMessage extends ContentEntityBase implements PrivateMessageInterfac
   public static function preCreate(EntityStorageInterface $storage_controller, array &$values) {
     parent::preCreate($storage_controller, $values);
     $values += [
-      'user_id' => \Drupal::currentUser()->id(),
+      'from' => \Drupal::currentUser()->id(),
+      'read' => FALSE,
     ];
   }
 
@@ -71,14 +72,14 @@ class PrivateMessage extends ContentEntityBase implements PrivateMessageInterfac
    * {@inheritdoc}
    */
   public function getName() {
-    return $this->get('name')->value;
+    return $this->get('subject')->value;
   }
 
   /**
    * {@inheritdoc}
    */
   public function setName($name) {
-    $this->set('name', $name);
+    $this->set('subject', $name);
     return $this;
   }
 
@@ -101,21 +102,21 @@ class PrivateMessage extends ContentEntityBase implements PrivateMessageInterfac
    * {@inheritdoc}
    */
   public function getOwner() {
-    return $this->get('user_id')->entity;
+    return $this->get('from')->entity;
   }
 
   /**
    * {@inheritdoc}
    */
   public function getOwnerId() {
-    return $this->get('user_id')->target_id;
+    return $this->get('from')->target_id;
   }
 
   /**
    * {@inheritdoc}
    */
   public function setOwnerId($uid) {
-    $this->set('user_id', $uid);
+    $this->set('from', $uid);
     return $this;
   }
 
@@ -123,22 +124,22 @@ class PrivateMessage extends ContentEntityBase implements PrivateMessageInterfac
    * {@inheritdoc}
    */
   public function setOwner(UserInterface $account) {
-    $this->set('user_id', $account->id());
+    $this->set('from', $account->id());
     return $this;
   }
 
   /**
    * {@inheritdoc}
    */
-  public function isPublished() {
-    return (bool) $this->getEntityKey('status');
+  public function isRead() {
+    return (bool) $this->getEntityKey('read');
   }
 
   /**
    * {@inheritdoc}
    */
-  public function setPublished($published) {
-    $this->set('status', $published ? TRUE : FALSE);
+  public function setPublished($read = TRUE) {
+    $this->set('read', $read ? TRUE : FALSE);
     return $this;
   }
 
@@ -148,18 +149,17 @@ class PrivateMessage extends ContentEntityBase implements PrivateMessageInterfac
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
 
-    $fields['user_id'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel(t('Authored by'))
-      ->setDescription(t('The user ID of author of the Private message entity.'))
-      ->setRevisionable(TRUE)
+    $fields['from'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Expediteur'))
       ->setSetting('target_type', 'user')
       ->setSetting('handler', 'default')
-      ->setTranslatable(TRUE)
-      ->setDisplayOptions('view', [
-        'label' => 'hidden',
-        'type' => 'author',
-        'weight' => 0,
-      ])
+      ->setDisplayConfigurable('form', FALSE)
+      ->setDisplayConfigurable('view', TRUE);
+
+    $fields['to'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Destinataire'))
+      ->setSetting('target_type', 'user')
+      ->setSetting('handler', 'default')
       ->setDisplayOptions('form', [
         'type' => 'entity_reference_autocomplete',
         'weight' => 5,
@@ -173,9 +173,8 @@ class PrivateMessage extends ContentEntityBase implements PrivateMessageInterfac
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
-    $fields['name'] = BaseFieldDefinition::create('string')
-      ->setLabel(t('Name'))
-      ->setDescription(t('The name of the Private message entity.'))
+    $fields['subject'] = BaseFieldDefinition::create('string')
+      ->setLabel(t('Sujet'))
       ->setSettings([
         'max_length' => 50,
         'text_processing' => 0,
@@ -193,10 +192,10 @@ class PrivateMessage extends ContentEntityBase implements PrivateMessageInterfac
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
-    $fields['status'] = BaseFieldDefinition::create('boolean')
-      ->setLabel(t('Publishing status'))
-      ->setDescription(t('A boolean indicating whether the Private message is published.'))
-      ->setDefaultValue(TRUE);
+    $fields['read'] = BaseFieldDefinition::create('boolean')
+      ->setLabel(t('Message lu'))
+      ->setDescription(t('A boolean indicating whether the Private message has been read.'))
+      ->setDefaultValue(FALSE);
 
     $fields['created'] = BaseFieldDefinition::create('created')
       ->setLabel(t('Created'))
