@@ -1,5 +1,5 @@
 {
-  "name": "drupal/simple_messagerie",
+  "name": "kgaut/simple_messagerie",
   "type": "drupal-module",
   "description": "Messagerie interne made simple",
   "keywords": ["Drupal"],
