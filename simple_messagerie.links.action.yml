@@ -1,0 +1,5 @@
+entity.private_message.add_form:
+  route_name: entity.private_message.add_form
+  title: 'Add Private message'
+  appears_on:
+    - entity.private_message.collection

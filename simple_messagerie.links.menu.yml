@@ -1,0 +1,14 @@
+
+# Private message menu items definition
+entity.private_message.collection:
+  title: 'Private message list'
+  route_name: entity.private_message.collection
+  description: 'List Private message entities'
+  parent: system.admin_structure
+  weight: 100
+
+private_message.admin.structure.settings:
+  title: Private message settings
+  description: 'Configure Private message entities'
+  route_name: private_message.settings
+  parent: system.admin_structure

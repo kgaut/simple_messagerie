@@ -1,0 +1,22 @@
+# Private message routing definition
+private_message.settings_tab:
+  route_name: private_message.settings
+  title: 'Settings'
+  base_route: private_message.settings
+
+entity.private_message.canonical:
+  route_name: entity.private_message.canonical
+  base_route: entity.private_message.canonical
+  title: 'View'
+
+entity.private_message.edit_form:
+  route_name: entity.private_message.edit_form
+  base_route: entity.private_message.canonical
+  title: 'Edit'
+
+entity.private_message.delete_form:
+  route_name:  entity.private_message.delete_form
+  base_route:  entity.private_message.canonical
+  title: Delete
+  weight: 10
+

@@ -1,0 +1,22 @@
+add private message entities:
+  title: 'Create new Private message entities'
+
+administer private message entities:
+  title: 'Administer Private message entities'
+  description: 'Allow to access the administration form to configure Private message entities.'
+  restrict access: true
+
+delete private message entities:
+  title: 'Delete Private message entities'
+
+edit private message entities:
+  title: 'Edit Private message entities'
+
+access private message overview:
+  title: 'Access the Private message overview page'
+
+view published private message entities:
+  title: 'View published Private message entities'
+
+view unpublished private message entities:
+  title: 'View unpublished Private message entities'
