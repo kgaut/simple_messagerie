@@ -1,0 +1,14 @@
+{
+  "name": "drupal/simple_messagerie",
+  "type": "drupal-module",
+  "description": "Messagerie interne made simple",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "https://www.drupal.org/project/simple_messagerie",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/simple_messagerie",
+    "source": "http://cgit.drupalcode.org/simple_messagerie"
+  },
+  "require": { }
+}

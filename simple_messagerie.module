@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Contains simple_messagerie.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function simple_messagerie_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the simple_messagerie module.
+    case 'help.page.simple_messagerie':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Messagerie interne made simple') . '</p>';
+      return $output;
+
+    default:
+  }
+}

@@ -1,0 +1,5 @@
+name: Simple Messagerie
+type: module
+description: Messagerie interne made simple
+core: 8.x
+package: Kgaut Tools
