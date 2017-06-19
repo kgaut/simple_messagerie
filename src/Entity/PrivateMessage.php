@@ -149,6 +149,14 @@ class PrivateMessage extends ContentEntityBase {
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
 
+    $fields['initial_message'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Message initial'))
+      ->setSetting('target_type', 'private_message')
+      ->setSetting('handler', 'default')
+      ->setDisplayConfigurable('form', FALSE)
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDefaultValue(0);
+
     $fields['from'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Expediteur'))
       ->setSetting('target_type', 'user')
