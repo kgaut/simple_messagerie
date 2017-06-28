@@ -1,0 +1,22 @@
+
+simple_messagerie.messagerie_controller_inbox:
+  path: '/messagerie'
+  defaults:
+    _controller: '\Drupal\simple_messagerie\Controller\MessagerieController::inbox'
+    _title: 'inbox'
+  requirements:
+    _permission: 'access content'
+simple_messagerie.messagerie_controller_newMessage:
+  path: '/messagerie/new'
+  defaults:
+    _controller: '\Drupal\simple_messagerie\Controller\MessagerieController::newMessage'
+    _title: 'Nouveau Message'
+  requirements:
+    _permission: 'access content'
+simple_messagerie.messagerie_controller_trash:
+  path: '/messagerie/corbeille'
+  defaults:
+    _controller: '\Drupal\simple_messagerie\Controller\MessagerieController::trash'
+    _title: 'Corbeille'
+  requirements:
+    _permission: 'access content'
